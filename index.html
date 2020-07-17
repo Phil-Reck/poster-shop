@@ -18,16 +18,39 @@
                 <img src="public/logo.png">
                 <h1>Vue.js Poster Shop</h1>
             </div>
+            <form class="search-bar" v-on:submit.prevent="onSubmit">
+                <input type="submit" value="search" class="btn">
+            </form>
         </div>
     </div>
     <div class="main container">
         <div class="products">
-            <p>Products go here.</p>
+            <div v-for="product in products" :key="product.id" class="product">
+                <div>
+                    <h4 class="product-title">{{ product.title }}</h4>
+                    <button v-on:click="addToCart(product)" class="btn add-to-cart">Add to cart </button>
+                </div>
+            </div>
         </div>
         <div class="cart">
             <h2>Shopping Cart</h2>
-            <div>
-                Total: $0.00
+            <ul>
+                <li v-for="item in cart" :key="item.id" class= "cart-item">
+                    <div>
+                        {{ item.title }}
+                    </div>
+                    <span class="item.qty">
+                        {{ item.price | currency }} x {{ item.qty }}
+                    </span>
+                    <button class="btn" @click="inc(item)">+</button>
+                    <button class="btn" @click="dec(item)">-</button>
+                </li>
+            </ul>
+            <div v-if="cart.length">
+                <div class="cart-total">Total: {{ total | currency }}</div>
+            </div>
+            <div class="empty-cart" v-else>
+                No items in the cart
             </div>
         </div>
     </div>
@@ -35,6 +58,7 @@
 
 <!-- Scripts -->
 <script src="/reload/reload.js"></script>
+<script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
 <script type="text/javascript" src="public/script.js"></script>
 
 </body>
