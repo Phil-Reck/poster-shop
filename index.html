@@ -19,15 +19,29 @@
                 <h1>Vue.js Poster Shop</h1>
             </div>
             <form class="search-bar" v-on:submit.prevent="onSubmit">
+                <input type="text" placeholder="Search for posters" v-model="search" required>
                 <input type="submit" value="search" class="btn">
             </form>
+            <p>Try search for <em> cat, dog & flower</em></p>
         </div>
     </div>
     <div class="main container">
         <div class="products">
+            <div v-if="loading">
+                Loading...
+            </div>
+            <div v-else class="search-results">
+                Found {{ products.length }} results for search term <em> {{ lastSearch }} </em>.
+            </div>
             <div v-for="product in products" :key="product.id" class="product">
                 <div>
+                    <div class="product-image">
+                        <img :src="product.thumb" alt="product image">
+                    </div>
+                </div>
+                <div>
                     <h4 class="product-title">{{ product.title }}</h4>
+                    <p class="product-price"><strong>{{ product.price | currency }}</strong></p>
                     <button v-on:click="addToCart(product)" class="btn add-to-cart">Add to cart </button>
                 </div>
             </div>
@@ -59,6 +73,7 @@
 <!-- Scripts -->
 <script src="/reload/reload.js"></script>
 <script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript" src="node_modules/vue-resource/dist//vue-resource.js"></script>
 <script type="text/javascript" src="public/script.js"></script>
 
 </body>
